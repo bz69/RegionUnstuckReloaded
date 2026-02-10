@@ -1,0 +1,30 @@
+name: RegionUnstuckReloaded
+version: '1.0'
+main: org.bz69.regionUnstuckReloaded.RegionUnstuckReloaded
+api-version: '1.20'
+depend: [WorldGuard]
+commands:
+  regionunstuckreloaded:
+    description: Main plugin command
+    usage: /regionunstuckreloaded <unstuck|reload>
+permissions:
+  regionunstuck.command:
+    description: Allows using /regionunstuckreloaded unstuck
+    default: true
+  regionunstuck.reload:
+    description: Allows reloading the configuration
+    default: op
+  regionunstuck.nocooldown.set:
+    description: Allows bypassing cooldown set after teleport
+    default: op
+  regionunstuck.bypass.delay:
+    description: Teleport instantly without delay
+    default: op
+  regionunstuck.*:
+    description: Full access to all commands
+    default: op
+    children:
+      regionunstuck.command: true
+      regionunstuck.reload: true
+      regionunstuck.nocooldown.set: true
+      regionunstuck.bypass.delay: true
