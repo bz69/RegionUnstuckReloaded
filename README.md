@@ -1,6 +1,6 @@
 # RegionUnstuckReloaded
 
-Teleport stuck WorldGuard region players outside the region.
+Teleports players who are stuck inside WorldGuard regions to a safe location outside the region.
 
 ## Commands
 * `/regionunstuckreloaded unstuck` — use unstuck
