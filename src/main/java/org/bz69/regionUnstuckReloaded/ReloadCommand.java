@@ -18,10 +18,10 @@ public class ReloadCommand implements CommandExecutor {
     /** Handles /regionunstuckreloaded <unstuck|reload>. */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        String usageRaw = plugin.getConfig().getString("messages.usage-reload", "§cUsage: /regionunstuckreloaded <unstuck|reload>");
+        String usage = plugin.formatMessage(usageRaw);
         if (args.length == 0) {
-            sender.sendMessage(plugin.formatMessage(
-                plugin.getConfig().getString("messages.usage-reload", "§cUsage: /regionunstuckreloaded <unstuck|reload>")
-            ));
+            sender.sendMessage(usage);
             return true;
         }
 
@@ -30,9 +30,7 @@ public class ReloadCommand implements CommandExecutor {
         }
 
         if (!"reload".equalsIgnoreCase(args[0])) {
-            sender.sendMessage(plugin.formatMessage(
-                plugin.getConfig().getString("messages.usage-reload", "§cUsage: /regionunstuckreloaded <unstuck|reload>")
-            ));
+            sender.sendMessage(usage);
             return true;
         }
 

@@ -134,6 +134,8 @@ public class UnstuckCommand implements CommandExecutor {
                 if (timeLeft <= 0) {
                     try {
                         Location destination = locationFinder.findSafeLocation(player);
+                        destination.setYaw(player.getLocation().getYaw());
+                        destination.setPitch(player.getLocation().getPitch());
                         player.teleport(destination);
                         player.getWorld().playSound(destination, getTeleportSound(), 1.0f, 1.0f);
 
@@ -200,18 +202,20 @@ public class UnstuckCommand implements CommandExecutor {
     }
 
     private boolean hasBypassCooldownSet(Player player) {
-        return player.hasPermission("regionunstuck.nocooldown.set") ||
+        return player.hasPermission("regionunstuck.nocooldown") ||
                player.hasPermission("regionunstuck.*");
     }
 
     private boolean hasBypassTeleportDelay(Player player) {
-        return player.hasPermission("regionunstuck.bypass.delay") ||
+        return player.hasPermission("regionunstuck.nodelay") ||
                player.hasPermission("regionunstuck.*");
     }
 
     private void executeTeleportNow(Player player) {
         try {
             Location destination = locationFinder.findSafeLocation(player);
+            destination.setYaw(player.getLocation().getYaw());
+            destination.setPitch(player.getLocation().getPitch());
             player.teleport(destination);
             player.getWorld().playSound(destination, getTeleportSound(), 1.0f, 1.0f);
 

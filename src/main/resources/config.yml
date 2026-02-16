@@ -13,12 +13,6 @@ command:
   aliases:
     - stuck
 
-search:
-  # Max distance (blocks) to search outward from the region border
-  max-out: 32
-  # Side offset (blocks) to scan left/right from the main exit line
-  max-side: 6
-
 teleport:
   sound:
     name: "ENTITY_ENDERMAN_TELEPORT"
@@ -27,7 +21,7 @@ messages:
   prefix: "&8[&6RegionUnstuck&8]&r "
   only-player: "&cOnly players can use this command!"
   already-teleporting: "&cTeleport is already in progress!"
-  no-teleport-needed: "&aTeleport is not needed."
+  no-teleport-needed: "&aYou are not in a foreign region."
   teleport-start: "&eTeleport will start in &6%seconds%&e seconds. Don't move!"
   teleport-countdown: "&e%seconds%..."
   teleport-success: "&aYou were teleported outside the region!"

@@ -1,16 +1,17 @@
 # RegionUnstuckReloaded
 
-Teleports players who are stuck inside WorldGuard regions to a safe location outside the region.
+Teleport stuck WorldGuard region players outside the region.
 
 ## Commands
-* `/stuck` — use unstuck
+* `/regionunstuckreloaded unstuck` — use unstuck
+* `/stuck` — alias for unstuck
 * `/regionunstuckreloaded reload` — reload config
 
 ## Permissions
 * `regionunstuck.command` — use unstuck
 * `regionunstuck.reload` — reload config
-* `regionunstuck.nocooldown.set` — bypass cooldown set after teleport
-* `regionunstuck.bypass.delay` — instant teleport without delay
+* `regionunstuck.nocooldown` — bypass cooldown set after teleport
+* `regionunstuck.nodelay` — instant teleport without delay
 * `regionunstuck.*` — full access
 
 ## Dependencies

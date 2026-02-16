@@ -20,15 +20,15 @@ public class PlayerMoveListener implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if (!UnstuckCommand.teleportingPlayers.containsKey(player.getUniqueId())) {
+        Location startLocation = UnstuckCommand.teleportingPlayers.get(player.getUniqueId());
+        if (startLocation == null) {
             return;
         }
 
-        Location from = event.getFrom();
         Location to = event.getTo();
-
-        if (to != null && hasPlayerMoved(from, to)) {
-            if (!plugin.getConfig().getBoolean("settings.teleport-cancel-on-move", true)) {
+        if (to != null && hasPlayerMoved(startLocation, to)) {
+            boolean cancelOnMove = plugin.getConfig().getBoolean("settings.teleport-cancel-on-move", true);
+            if (!cancelOnMove) {
                 return;
             }
 
@@ -40,8 +40,11 @@ public class PlayerMoveListener implements Listener {
 
     /** Checks if position changed (ignores head rotation). */
     private boolean hasPlayerMoved(Location from, Location to) {
-        return from.getX() != to.getX() ||
-               from.getY() != to.getY() ||
-               from.getZ() != to.getZ();
+        if (from.getWorld() != to.getWorld()) {
+            return true;
+        }
+        double dx = from.getX() - to.getX();
+        double dz = from.getZ() - to.getZ();
+        return (dx * dx + dz * dz) > 1.0;
     }
 }

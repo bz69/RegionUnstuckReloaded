@@ -31,7 +31,7 @@ public final class RegionUnstuckReloaded extends JavaPlugin {
 
         registerAliases();
 
-        getLogger().info("RegionUnstuckReloaded loaded successfully.");
+        getLogger().info("RegionUnstuckReloaded v" + getDescription().getVersion() + " enabled.");
     }
 
     /** Applies prefix and color formatting. */
