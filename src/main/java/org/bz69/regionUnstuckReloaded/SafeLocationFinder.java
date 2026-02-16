@@ -32,15 +32,14 @@ public class SafeLocationFinder {
         }
 
         Location baseLocation = getClosestLocationOutsideRegion(foreignRegion, playerLoc);
-        Location first = trySafeAtBase(baseLocation, player);
+        Location first = trySafeAtBase(baseLocation);
         if (first != null) {
             return first;
         }
 
-        Location oppositeBase = getOppositeLocationOutsideRegion(foreignRegion, playerLoc);
-        Location second = trySafeAtBase(oppositeBase, player);
-        if (second != null) {
-            return second;
+        Location around = findSafeAroundRegion(foreignRegion, playerLoc);
+        if (around != null) {
+            return around;
         }
 
         throw new Exception("No safe location found for teleport");
@@ -186,25 +185,39 @@ public class SafeLocationFinder {
                type == Material.SOUL_CAMPFIRE;
     }
 
-    private Location trySafeAtBase(Location base, Player player) throws Exception {
+    private Location trySafeAtBase(Location base) throws Exception {
         Location top = getTopBlockLocation(base);
-        if (top != null && isOutsideForeignRegions(top, player)) {
+        if (top != null) {
             return top;
         }
         return null;
     }
 
-    private boolean isOutsideForeignRegions(Location loc, Player player) {
-        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
-        RegionQuery query = container.createQuery();
-        ApplicableRegionSet regions = query.getApplicableRegions(BukkitAdapter.adapt(loc));
+    private Location findSafeAroundRegion(ProtectedRegion region, Location playerLoc) throws Exception {
+        BlockVector3 min = region.getMinimumPoint();
+        BlockVector3 max = region.getMaximumPoint();
+        World world = playerLoc.getWorld();
+        if (world == null) {
+            return null;
+        }
 
-        for (ProtectedRegion region : regions) {
-            if (!region.getOwners().contains(player.getUniqueId()) &&
-                !region.getMembers().contains(player.getUniqueId())) {
-                return false;
+        int minX = min.getBlockX() - 1;
+        int maxX = max.getBlockX() + 1;
+        int minZ = min.getBlockZ() - 1;
+        int maxZ = max.getBlockZ() + 1;
+
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                if (x != minX && x != maxX && z != minZ && z != maxZ) {
+                    continue;
+                }
+                Location base = new Location(world, x, playerLoc.getY(), z);
+                Location top = trySafeAtBase(base);
+                if (top != null) {
+                    return top;
+                }
             }
         }
-        return true;
+        return null;
     }
 }

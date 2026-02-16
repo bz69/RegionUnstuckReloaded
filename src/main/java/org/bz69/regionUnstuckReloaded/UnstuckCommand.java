@@ -99,15 +99,14 @@ public class UnstuckCommand implements CommandExecutor {
             return false;
         }
 
-        boolean hasForeign = false;
         for (ProtectedRegion region : regions) {
-            if (!region.getOwners().contains(player.getUniqueId()) &&
-                !region.getMembers().contains(player.getUniqueId())) {
-                hasForeign = true;
+            if (region.getOwners().contains(player.getUniqueId()) ||
+                region.getMembers().contains(player.getUniqueId())) {
+                return false;
             }
         }
 
-        return hasForeign;
+        return true;
     }
 
     /** Starts delayed teleport with movement cancellation. */
